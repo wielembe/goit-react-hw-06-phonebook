@@ -1,12 +1,14 @@
-.list {
-  display: flex;
+.contactList {
+  margin: 20px;
+  border: 1px solid #000;
 
-  flex-direction: column;
-  gap: 18px;
-  padding-top: 10px;
-  font-size: 18px;
+  background-color: #fff;
 }
-
-.deleteBtn {
-  margin-left: 20px;
+.listItem {
+  display: flex;
+}
+.listItem button {
+  width: auto;
+  height: fit-content;
+  margin: auto 15px;
 }
