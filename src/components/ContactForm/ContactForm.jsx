@@ -1,54 +1,78 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'components/redux/contactsSlice';
-import { getContacts } from 'components/redux/selectors';
+import PropTypes from 'prop-types';
 
-export const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+export const ContactForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
-    const form = event.target;
-    const newName = form.elements.name.value;
-    const newNumber = form.elements.number.value;
+    const id = nanoid();
+    const contact = { id, name, number };
 
-    if (contacts.filter(contact => contact.name.includes(newName)).length) {
-      alert(`${newName} is already in your contact list.`);
-    } else if (
-      contacts.filter(contact => contact.number.includes(newNumber)).length
-    ) {
-      alert(`${newName} cannot have the same number as your other contact.`);
-    } else if (newName !== '' || newNumber !== '') {
-      dispatch(addContact(newName, newNumber));
-      form.reset();
-    }
+    onSubmit(contact);
+
+    reset();
   };
-  return (
-    <form className={css.contactForm} onSubmit={handleSubmit}>
-      <label htmlFor={uuidv4()}>Name</label>
-      <input
-        className={css.contactForm__input}
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+([ -'][a-zA-Zа-яА-Я]+)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        id={uuidv4()}
-        required
-      />
 
-      <label htmlFor={uuidv4()}>Number </label>
-      <input
-        className={css.contactForm__input}
-        type="tel"
-        name="number"
-        pattern="^[+]?[0-9 \u0028\u0029\u002D]*$"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        id={uuidv4()}
-        required
-      />
-      <button type="submit">Add contact</button>
+  const reset = () => {
+    setName('');
+    setNumber('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={css.form}>
+      <label>
+        <h3 className={css.subtitle}>Name</h3>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          className={css.input}
+          pattern="^[a-zA-Zа-яА-Я]+(([a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        <h3 className={css.subtitle}>Number</h3>
+        <input
+          type="tel"
+          name="number"
+          value={number}
+          className={css.input}
+          pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+          onChange={handleChange}
+        />
+      </label>
+      <button type="submit" className={css.submitBtn}>
+        Add contact
+      </button>
     </form>
   );
+};
+
+ContactForm.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
+  onSubmit: PropTypes.func,
 };
