@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import css from './App.module.css';
 
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { ContactFilter } from '../Filter/Filter';
+
+import css from './App.module.css';
 
 export const App = () => {
   const [contacts, setContacts] = useState([]);
