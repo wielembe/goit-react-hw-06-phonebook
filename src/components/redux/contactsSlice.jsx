@@ -1,5 +1,4 @@
-import { nanoid } from 'nanoid';
-
+import { v4 as uuidv4 } from 'uuid';
 import { contactsFilter } from './constants';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -19,7 +18,7 @@ export const contactsSlice = createSlice({
       prepare(name, number) {
         return {
           payload: {
-            id: nanoid(),
+            id: uuidv4(),
             name,
             number,
           },

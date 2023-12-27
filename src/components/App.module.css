@@ -1,0 +1,10 @@
+.container {
+  width: 600px;
+  border: 2px solid #000;
+
+  margin: 20px auto;
+  background-color: rgb(186, 188, 188);
+}
+.titles {
+  margin-left: 15px;
+}
