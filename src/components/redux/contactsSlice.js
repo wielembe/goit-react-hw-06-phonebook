@@ -2,8 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { contactsFilter } from './constants';
 import { createSlice } from '@reduxjs/toolkit';
 
-const storage = localStorage.getItem('state.contacts');
-const parsedStorage = JSON.parse(storage);
+//const storage = localStorage.getItem('state.contacts');
+
+const parsedStorage = JSON.parse(localStorage.getItem('contacts')) || [];
+//const parsedStorage = JSON.parse(storage);
 const tasksInitialState = [...contactsFilter.contacts, ...parsedStorage];
 
 export const contactsSlice = createSlice({
