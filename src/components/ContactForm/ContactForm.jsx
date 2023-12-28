@@ -27,7 +27,7 @@ export const ContactForm = () => {
   };
   return (
     <form className={css.contactForm} onSubmit={handleSubmit}>
-      <label htmlFor={uuidv4()}>Name</label>
+      <h3 htmlFor={uuidv4()}>Name</h3>
       <input
         className={css.contactForm__input}
         type="text"
@@ -37,7 +37,7 @@ export const ContactForm = () => {
         id={uuidv4()}
         required
       />
-      <label htmlFor={uuidv4()}>Number </label>
+      <h3 htmlFor={uuidv4()}>Number </h3>
       <input
         className={css.contactForm__input}
         type="tel"
