@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'components/redux/contactsSlice';
 import { getContacts } from 'components/redux/selectors';
 
+const nameId = uuidv4();
+
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
@@ -27,24 +29,23 @@ export const ContactForm = () => {
   };
   return (
     <form className={css.contactForm} onSubmit={handleSubmit}>
-      <h3 htmlFor={uuidv4()}>Name</h3>
+      <label htmlFor={nameId}>Name</label>
       <input
         className={css.contactForm__input}
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+([ -'][a-zA-Zа-яА-Я]+)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        id={uuidv4()}
+        id={nameId}
         required
       />
-      <h3 htmlFor={uuidv4()}>Number </h3>
+      <h3>Number </h3>
       <input
         className={css.contactForm__input}
         type="tel"
         name="number"
         pattern="^[+]?[0-9 \u0028\u0029\u002D]*$"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        id={uuidv4()}
         required
       />
 
